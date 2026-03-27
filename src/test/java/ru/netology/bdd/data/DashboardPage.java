@@ -45,7 +45,7 @@ public class DashboardPage {
         return Integer.parseInt(value);
     }
 
-    public SelenideElement heading() {
-        return pageHeader.shouldBe(Condition.exactText("Ваши карты"));
+    public void heading() {
+        pageHeader.shouldBe(Condition.exactText("Ваши карты"));
     }
 }

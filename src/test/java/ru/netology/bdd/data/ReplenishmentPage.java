@@ -12,31 +12,21 @@ public class ReplenishmentPage {
     private SelenideElement transferButton = $("[data-test-id=action-transfer]");
     private SelenideElement cancelButton = $("[data-test-id=action-cancel]");
     private SelenideElement errorNotification = $("[data-test-id=error-notification] .notification__title");
-    private final String firstCard = "5559 0000 0000 0001";
-    private final String secondCard = "5559 0000 0000 0002";
 
-    public String getFirstCard() {
-        return firstCard;
+    public DashboardPage transfer(int amount, DataHelper.CardNumber number) {
+        amountField.setValue(String.valueOf(amount));
+        fromField.setValue(number.getNumber());
+        transferButton.click();
+        return new DashboardPage();
     }
 
-    public String getSecondCard() {
-        return secondCard;
-    }
-
-    public DashboardPage transfer (int amount, String from) {
-    amountField.setValue(String.valueOf(amount));
-    fromField.setValue(from);
-    transferButton.click();
-    return new DashboardPage();
-    }
-    
-    public DashboardPage cancel () {
+    public DashboardPage cancel() {
         cancelButton.click();
         return new DashboardPage();
     }
-    
-    public SelenideElement error() {
-        return errorNotification.shouldBe(Condition.visible).
+
+    public void error() {
+        errorNotification.shouldBe(Condition.visible).
                 shouldBe(Condition.exactText("Ошибка"));
     }
 }
