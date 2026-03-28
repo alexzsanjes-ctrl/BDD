@@ -1,4 +1,4 @@
-package ru.netology.bdd.data;
+package ru.netology.bdd.page;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
@@ -46,6 +46,7 @@ public class DashboardPage {
     }
 
     public void heading() {
-        pageHeader.shouldBe(Condition.exactText("Ваши карты"));
+        pageHeader.shouldBe(Condition.visible)
+                .shouldBe(Condition.exactText("Ваши карты"));
     }
 }

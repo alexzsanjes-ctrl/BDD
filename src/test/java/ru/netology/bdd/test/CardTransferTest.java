@@ -5,9 +5,10 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import ru.netology.bdd.data.DashboardPage;
 import ru.netology.bdd.data.DataHelper;
-import ru.netology.bdd.data.LoginPage;
+import ru.netology.bdd.page.LoginPage;
+
+import java.util.Random;
 
 import static com.codeborne.selenide.Selenide.open;
 import static org.junit.jupiter.api.Assertions.*;
@@ -28,7 +29,7 @@ class CardTransferTest {
     @Test
     @DisplayName("The transfer from the first card to the second should be successfully completed")
     void shouldSuccessTransferFromFirstToSecondCard() {
-        int amount = 5000;
+        Random random = new Random();
 
         var loginPage = new LoginPage();
         var authInfo = DataHelper.getAuthInfo();
@@ -38,18 +39,16 @@ class CardTransferTest {
         var firstCardBalance = dashboardPage.getFirstCardBalance();
         var secondCardBalance = dashboardPage.getSecondCardBalance();
 
-        if (firstCardBalance < amount) {
-            amount = firstCardBalance;
-        }
+        int randomAmount = random.nextInt(firstCardBalance+1);
 
         var replenishmentPage = dashboardPage.secondCard();
         var cardNumber = DataHelper.getFirstCardNumber();
-        var newDashboardPage = replenishmentPage.transfer(amount, cardNumber);
+        var newDashboardPage = replenishmentPage.transfer(randomAmount, cardNumber);
 
         var firstCardActualBalance = newDashboardPage.getFirstCardBalance();
         var secondCardActualBalance = newDashboardPage.getSecondCardBalance();
-        int firstCardExpectedBalance = firstCardBalance - amount;
-        int secondCardExpectedBalance = secondCardBalance + amount;
+        int firstCardExpectedBalance = firstCardBalance - randomAmount;
+        int secondCardExpectedBalance = secondCardBalance + randomAmount;
 
         assertEquals(firstCardExpectedBalance, firstCardActualBalance);
         assertEquals(secondCardExpectedBalance, secondCardActualBalance);
@@ -58,7 +57,7 @@ class CardTransferTest {
     @Test
     @DisplayName("The transfer from the second card to the first should be successfully completed")
     void shouldSuccessTransferFromSecondToFirstCard() {
-        int amount = 15100;
+        Random random = new Random();
 
         var loginPage = new LoginPage();
         var authInfo = DataHelper.getAuthInfo();
@@ -68,18 +67,16 @@ class CardTransferTest {
         var firstCardBalance = dashboardPage.getFirstCardBalance();
         var secondCardBalance = dashboardPage.getSecondCardBalance();
 
-        if (secondCardBalance < amount) {
-            amount = secondCardBalance;
-        }
+        int randomAmount = random.nextInt(secondCardBalance+1);
 
         var replenishmentPage = dashboardPage.firstCard();
         var cardNumber = DataHelper.getSecondCardNumber();
-        var newDashboardPage = replenishmentPage.transfer(amount, cardNumber);
+        var newDashboardPage = replenishmentPage.transfer(randomAmount, cardNumber);
 
         var firstCardActualBalance = newDashboardPage.getFirstCardBalance();
         var secondCardActualBalance = newDashboardPage.getSecondCardBalance();
-        int firstCardExpectedBalance = firstCardBalance + amount;
-        int secondCardExpectedBalance = secondCardBalance - amount;
+        int firstCardExpectedBalance = firstCardBalance + randomAmount;
+        int secondCardExpectedBalance = secondCardBalance - randomAmount;
 
         assertEquals(firstCardExpectedBalance, firstCardActualBalance);
         assertEquals(secondCardExpectedBalance, secondCardActualBalance);
@@ -88,6 +85,8 @@ class CardTransferTest {
     @Test
     @DisplayName("The balance on the cards must be saved if the card number for replenishment and debit matches")
     void shouldSavedBalanceOnTheCardsWhenNumbersIsMatches() {
+        Random random = new Random();
+
         var loginPage = new LoginPage();
         var authInfo = DataHelper.getAuthInfo();
         var verificationPage = loginPage.validLogin(authInfo);
@@ -95,9 +94,12 @@ class CardTransferTest {
         var dashboardPage = verificationPage.validVerification(verificationCode);
         var firstCardBalance = dashboardPage.getFirstCardBalance();
         var secondCardBalance = dashboardPage.getSecondCardBalance();
+
+        int randomAmount = random.nextInt(secondCardBalance+1);
+
         var replenishmentPage = dashboardPage.secondCard();
         var cardNumber = DataHelper.getSecondCardNumber();
-        var newDashboardPage = replenishmentPage.transfer(1000, cardNumber);
+        var newDashboardPage = replenishmentPage.transfer(randomAmount, cardNumber);
 
         var firstCardActualBalance = newDashboardPage.getFirstCardBalance();
         var secondCardActualBalance = newDashboardPage.getSecondCardBalance();

@@ -1,7 +1,8 @@
-package ru.netology.bdd.data;
+package ru.netology.bdd.page;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
+import ru.netology.bdd.data.DataHelper;
 
 import static com.codeborne.selenide.Selenide.$;
 
