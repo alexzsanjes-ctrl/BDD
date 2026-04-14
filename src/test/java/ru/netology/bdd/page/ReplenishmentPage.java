@@ -2,7 +2,7 @@ package ru.netology.bdd.page;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
-import ru.netology.bdd.data.DataHelper;
+import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 
 import static com.codeborne.selenide.Selenide.$;
 
@@ -14,9 +14,9 @@ public class ReplenishmentPage {
     private SelenideElement cancelButton = $("[data-test-id=action-cancel]");
     private SelenideElement errorNotification = $("[data-test-id=error-notification] .notification__title");
 
-    public DashboardPage transfer(int amount, DataHelper.CardNumber number) {
+    public DashboardPage transfer(int amount, String number) {
         amountField.setValue(String.valueOf(amount));
-        fromField.setValue(number.getNumber());
+        fromField.setValue(number);
         transferButton.click();
         return new DashboardPage();
     }

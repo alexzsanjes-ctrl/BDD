@@ -21,9 +21,9 @@ public class DataHelper {
         public String code;
     }
 
-    public static VerificationCode getVerificationCode() {
-        return new VerificationCode("12345");
-    }
+//    public static VerificationCode getVerificationCode() {
+//        return new VerificationCode("12345");
+//    }
 
     @Value
     public static class CardNumber {
